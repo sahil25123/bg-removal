@@ -4,6 +4,7 @@ import Home from "./pages/home"
 import Result from "./pages/Result"
 import BuyCredit from "./pages/BuyCredit"
 import Navbar from "./components/Navbar"
+import Footer from "./components/footer"
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
     <Route path={"/buy"} element={<BuyCredit/>}/>
 
   </Routes>
+  <Footer/>
   </>
   )
 }
