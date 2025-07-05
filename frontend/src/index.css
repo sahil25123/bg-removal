@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+
+.bg-layer{
+    background-image: url(/frontend/src/assets/bg_layer.png);
+}
