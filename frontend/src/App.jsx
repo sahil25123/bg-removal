@@ -5,6 +5,7 @@ import Result from "./pages/Result"
 import BuyCredit from "./pages/BuyCredit"
 import Navbar from "./components/Navbar"
 import Footer from "./components/footer"
+import { SignIn, SignInButton } from "@clerk/clerk-react"
 
 function App() {
   
@@ -12,7 +13,6 @@ function App() {
   return (
     <>
     <Navbar/>
-
   <Routes>
     <Route path={"/"} element={<Home/>}/>
     <Route path={"/result"} element={<Result/>}/>
