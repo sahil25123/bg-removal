@@ -101,3 +101,24 @@ const clerkWebHooks = async (req, res) => {
 
 
 export {clerkWebHooks}
+
+
+
+const userCredits = async (req, res) =>{
+    try{
+
+        const {clerkId} = req.body;
+
+        const userData = await User.findOne({clerkId})
+    }
+
+    catch(e){
+        console.log(e.message);
+
+        res.json({success:false , message :e.message})
+    }
+
+
+
+}
+export {userCredits};
