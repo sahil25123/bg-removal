@@ -6,7 +6,10 @@ import { toast } from "react-toastify";
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {  // Destructure children directly
-    const [credit, setCredit] = useState(0);  // Changed from false to 0 (more appropriate for credits)
+    const [credit, setCredit] = useState(5);
+    const [image , setImage] = useState(false);
+    
+    
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const { getToken } = useAuth();
 
@@ -28,12 +31,32 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
             toast.error(e.response?.data?.message || e.message);  // Show server error if available
         }
     };
+    const removeBg = async (image) =>{
+        try{
+            console.log("remove bg function is been called")
+
+        }
+        catch(e){
+            console.log(e.message);
+            toast.error(e.response?.data?.message || e.message);
+
+
+
+        }
+
+    }
+
+
+
+
 
     const value = {
         credit,
         setCredit,
         loadCreditsData, 
-        backendUrl
+        backendUrl,
+        image, 
+        setImage
     };
 
     return (

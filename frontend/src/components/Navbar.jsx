@@ -43,6 +43,11 @@ const Navbar = () => {
                   </svg>
                   My Results
                 </Link>
+                {/* Credits Button */}
+                <button className="flex items-center gap-2 px-3 py-2 bg-white-100 rounded-lg"> 
+                  <img  className="w-5 h-5" src={assets.credit_icon} alt="Credits"/>
+                  <span className="text-sm font-medium">Credits: {credit}</span>
+                </button>
                 <UserButton afterSignOutUrl="/" />
               </div>
             ) : (
