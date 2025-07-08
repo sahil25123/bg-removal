@@ -1,17 +1,26 @@
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, useClerk, useUser } from "@clerk/clerk-react";
 import { useState, createContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {  // Destructure children directly
     const [credit, setCredit] = useState(5);
     const [image , setImage] = useState(false);
+    const [resultImage  , setResultImage]   = useState(false);
+    const navigate = useNavigate();
+
+
     
     
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const { getToken } = useAuth();
+    const {isSignedIn} = useUser();
+    const {openSignIn} = useClerk();
+
+
 
     const loadCreditsData = async () => {
         try {
@@ -33,17 +42,22 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
     };
     const removeBg = async (image) =>{
         try{
-            console.log("remove bg function is been called")
 
+            if(!isSignedIn){
+                return openSignIn();
+            }
+            setImage(image);
+            setResultImage(false);
+            navigate("/result")
+
+
+            // console.log(image)
         }
         catch(e){
             console.log(e.message);
             toast.error(e.response?.data?.message || e.message);
 
-
-
         }
-
     }
 
 

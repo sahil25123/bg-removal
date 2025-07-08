@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { assets } from '../assets/assets';
+import { AppContext } from '../../context/AppContext';
 
 const Upload = () => {
+  const {removebg } = useContext(AppContext);
+  
   return (
     <section className="py-12 md:py-20 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 text-center">
@@ -27,10 +30,12 @@ const Upload = () => {
               </p>
             </div>
             
-            <input 
+            <input  
+            onChange  ={e => removebg(e.target.files[0])}
+            accept ="image/*" 
               type="file" 
               id="upload2" 
-              accept="image/*" 
+  
               className="hidden" 
             />
             <label

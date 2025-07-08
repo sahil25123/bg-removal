@@ -26,7 +26,7 @@ const Header = () => {
             </p>
             
             <div className="pt-4">
-              <input type="file" name="" id="upload1" className="hidden" accept="image/*" />
+              <input  onChange={e=> removeBg(e.target.files[0])}  accept="image/*" type="file" name="" id="upload1" className="hidden" />
               <label 
                 htmlFor="upload1"
                 className="inline-flex items-center gap-3 bg-white border-2 border-dashed border-blue-400 rounded-xl px-6 py-4 cursor-pointer hover:bg-blue-50 transition-colors shadow-md hover:shadow-lg"
