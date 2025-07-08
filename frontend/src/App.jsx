@@ -13,7 +13,7 @@ function App() {
   
 
   return (
-    <div classname="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50">
      
         <Navbar/>
     <Routes>
