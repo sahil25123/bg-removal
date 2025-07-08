@@ -6,21 +6,25 @@ import BuyCredit from "./pages/BuyCredit"
 import Navbar from "./components/Navbar"
 import Footer from "./components/footer"
 import { SignIn, SignInButton } from "@clerk/clerk-react"
+import {ToastContainer } from "react-toastify";
+
 
 function App() {
   
 
   return (
-    <>
-    <Navbar/>
-  <Routes>
+    <div classname="min-h-screen bg-slate-50">
+     
+        <Navbar/>
+    <Routes>
     <Route path={"/"} element={<Home/>}/>
     <Route path={"/result"} element={<Result/>}/>
     <Route path={"/buy"} element={<BuyCredit/>}/>
-
-  </Routes>
-  <Footer/>
-  </>
+    </Routes>
+    <Footer/>
+    
+    
+  </div>
   )
 }
 

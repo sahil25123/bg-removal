@@ -1,11 +1,21 @@
-import React from 'react';
+import React  , {useContext, useEffect} from 'react';
 import { assets } from '../assets/assets.js';
 import { Link } from "react-router-dom";
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { AppContext } from '../../context/AppContext.jsx';
 
 const Navbar = () => {
   const { openSignIn } = useClerk();
   const { isSignedIn, user } = useUser();
+  const {credit , loadCreditData} = useContext(AppContext)
+
+
+  useEffect(() =>{
+    if(isSignedIn){
+      loadCreditData()
+    }
+
+  },[isSignedIn , loadCreditData])
  
   return (
     <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
