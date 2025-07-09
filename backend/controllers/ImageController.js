@@ -7,6 +7,25 @@ import User from "../models/user.js";
 
 const removeBgImage = async(req,res)=>{
     try{
+        const {clerkid}  = req.body;
+        const user = await User.findOne({clerkId});
+
+        if(!user) {
+            return res.json({success : false  , messaage : "User Not Found"});
+
+        }
+        if(user.creditBalancw=== 0){
+            return res.json({messaage: "No credit balance" , creditBalancw:user})
+
+        }
+
+        const imagePath = req.file.path;
+        // Reading the image file 
+
+        const imageFile = fs.createReadStream(imagePath);
+        const formData = new formData();
+
+        
 
 
 
