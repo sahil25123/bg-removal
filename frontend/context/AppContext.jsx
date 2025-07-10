@@ -40,37 +40,87 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
             toast.error(e.response?.data?.message || e.message);  // Show server error if available
         }
     };
-    const removeBg = async (image) =>{
-        try{
-
-            if(!isSignedIn){
-                return openSignIn();
+    const removeBg = async (image) => {
+        try {
+            if (!isSignedIn) {
+                openSignIn();
+                return; // Exit after opening sign-in
             }
+            
+            if (!image) {
+                toast.error("Please select an image first");
+                return;
+            }
+
             setImage(image);
             setResultImage(false);
-            navigate("/result")
+            navigate("/result");
+            
+            const token = await getToken();
+            if (!token) {
+                throw new Error("Authentication token not found");
+            }
 
+            const formData = new FormData();
+            formData.append("image", image);
+            // Add user ID to the form data
+            if (user?.id) {
+                formData.append("clerkId", user.id);
+            }
 
-            // console.log(image)
-        }
-        catch(e){
-            console.log(e.message);
-            toast.error(e.response?.data?.message || e.message);
+            console.log("Sending request to:", `${backendUrl}/api/image/remove-bg`);
+            console.log("FormData entries:", [...formData.entries()]);
 
+            const { data } = await axios.post(
+                `${backendUrl}/api/image/remove-bg`,
+                formData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    timeout: 60000, // 60 seconds timeout
+                    withCredentials: true
+                }
+            );
+            
+            console.log("Response from server:", data);
+
+            if (data.success) {
+                setResultImage(data.resultImage);
+                if (data.creditBalance !== undefined) {
+                    setCredit(data.creditBalance);
+                }
+            } else {
+                toast.error(data.message || "Failed to process image");
+                if (data.creditBalance !== undefined) {
+                    setCredit(data.creditBalance);
+                    if (data.creditBalance === 0) {
+                        navigate('/buy');
+                    }
+                }
+            }
+        } catch (e) {
+            console.error("Error in removeBg:", e);
+            const errorMessage = e.response?.data?.message || 
+                               e.message || 
+                               "An error occurred while processing your request";
+            toast.error(errorMessage);
+            
+            // If there was an error, reset the loading states
+            setImage(null);
+            setResultImage(null);
         }
     }
-
-
-
-
-
     const value = {
         credit,
         setCredit,
         loadCreditsData, 
         backendUrl,
         image, 
-        setImage
+        setImage, 
+        removeBg , resultImage ,
+         setResultImage
     };
 
     return (

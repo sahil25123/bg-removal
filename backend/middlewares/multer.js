@@ -6,7 +6,7 @@ import multer from "multer";
 const storage = multer.diskStorage({
 
     filename :function(re , file , callback){
-        callback(null , `${DataTransfer.now}_${file.originalname}`)
+        callback(null , `${Date.now}_${file.originalname}`)
     }
 })
 
