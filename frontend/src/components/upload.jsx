@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { assets } from '../assets/assets';
-import { AppContext } from '../../context/AppContext';
+import { AppContext } from '../context/AppContext';
 
 const Upload = () => {
-  const {removebg } = useContext(AppContext);
+  const { removeBg } = useContext(AppContext);
   
   return (
     <section className="py-12 md:py-20 bg-gradient-to-b from-white to-gray-50">
@@ -31,7 +31,7 @@ const Upload = () => {
             </div>
             
             <input  
-            onChange  ={e => removebg(e.target.files[0])}
+            onChange  ={e => removeBg(e.target.files[0])}
             accept ="image/*" 
               type="file" 
               id="upload2" 

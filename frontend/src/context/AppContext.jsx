@@ -11,16 +11,10 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
     const [image , setImage] = useState(false);
     const [resultImage  , setResultImage]   = useState(false);
     const navigate = useNavigate();
-
-
-    
-    
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const { getToken } = useAuth();
-    const {isSignedIn} = useUser();
+    const {isSignedIn ,user} = useUser();
     const {openSignIn} = useClerk();
-
-
 
     const loadCreditsData = async () => {
         try {
@@ -30,6 +24,8 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
                     Authorization: `Bearer ${token}`  // Standard auth header format
                 }
             });
+            console.log(data); // for error handling 
+
             
             if (data.success) {
                 setCredit(data.credit);
@@ -71,18 +67,16 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
             console.log("Sending request to:", `${backendUrl}/api/image/remove-bg`);
             console.log("FormData entries:", [...formData.entries()]);
 
+            console.log("before the image sending to the backend ")
             const { data } = await axios.post(
                 `${backendUrl}/api/image/remove-bg`,
                 formData,
                 {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    timeout: 60000, // 60 seconds timeout
-                    withCredentials: true
-                }
+                    headers:{token}
+            }
             );
+
+            console.log("After sending to the backend")
             
             console.log("Response from server:", data);
 
