@@ -1,12 +1,13 @@
 import React  , {useContext, useEffect} from 'react';
 import { assets } from '../assets/assets.js';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
 import { AppContext } from '../context/AppContext.jsx';
 
 const Navbar = () => {
   const { openSignIn } = useClerk();
   const { isSignedIn } = useUser();
+  const navigate = useNavigate();
   const {credit , loadCreditData} = useContext(AppContext)
 
   // console.log(credit);
@@ -45,7 +46,7 @@ const Navbar = () => {
                   My Results
                 </Link>
                 {/* Credits Button */}
-                <button className="flex items-center gap-2 px-3 py-2 bg-white-100 rounded-lg"> 
+                <button  onClick={()=>navigate("/buy")} className="flex items-center gap-2 px-3 py-2 bg-white-100 rounded-lg"> 
                   <img  className="w-5 h-5" src={assets.credit_icon} alt="Credits"/>
                   <span className="text-sm font-medium">Credits: {credit}</span>
                 </button>
