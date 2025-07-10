@@ -6,9 +6,10 @@ import { AppContext } from '../context/AppContext.jsx';
 
 const Navbar = () => {
   const { openSignIn } = useClerk();
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn } = useUser();
   const {credit , loadCreditData} = useContext(AppContext)
 
+  // console.log(credit);
 
   useEffect(() =>{
     if(isSignedIn){

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {  // Destructure children directly
-    const [credit, setCredit] = useState(5);
+    const [credit, setCredit] = useState(10);
     const [image , setImage] = useState(false);
     const [resultImage  , setResultImage]   = useState(false);
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
                     Authorization: `Bearer ${token}`  // Standard auth header format
                 }
             });
-            console.log(data); // for error handling 
+            // console.log(data);  for error handling 
 
             
             if (data.success) {
@@ -64,10 +64,10 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
                 formData.append("clerkId", user.id);
             }
 
-            console.log("Sending request to:", `${backendUrl}/api/image/remove-bg`);
-            console.log("FormData entries:", [...formData.entries()]);
+            // console.log("Sending request to:", `${backendUrl}/api/image/remove-bg`);
+            // console.log("FormData entries:", [...formData.entries()]);
 
-            console.log("before the image sending to the backend ")
+            // console.log("before the image sending to the backend ")
             const { data } = await axios.post(
                 `${backendUrl}/api/image/remove-bg`,
                 formData,
@@ -76,9 +76,9 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
             }
             );
 
-            console.log("After sending to the backend")
+            // console.log("After sending to the backend")
             
-            console.log("Response from server:", data);
+            // console.log("Response from server:", data);
 
             if (data.success) {
                 setResultImage(data.resultImage);

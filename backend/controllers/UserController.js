@@ -110,6 +110,12 @@ const userCredits = async (req, res) =>{
         const {clerkId} = req.body;
 
         const userData = await User.findOne({clerkId})
+
+        if (!userData) {
+        return res.json({ success: false, message: "User not found" });
+      }
+
+      res.json({ success: true, credits: userData.creditBalance });
     }
 
     catch(e){
