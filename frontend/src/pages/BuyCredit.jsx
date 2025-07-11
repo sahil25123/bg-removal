@@ -1,14 +1,18 @@
 import React from 'react';
 import { assets, plans } from '../assets/assets';
 import { useContext } from 'react';
-import AppContext from "../context/AppContext";
+import AppContext from "../context/AppContext.jsx";
 import { toast } from "react-toastify";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const BuyCredit = () => {
+
+ 
+
   const { backendUrl, loadCreditsData, getToken } = useContext(AppContext);
   const navigate = useNavigate();
+  // console.log(backendUrl);
 
   const initPay = async (order) => {
     const options = {

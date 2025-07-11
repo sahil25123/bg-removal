@@ -12,6 +12,9 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
     const [resultImage  , setResultImage]   = useState(false);
     const navigate = useNavigate();
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+    // console.log(backendUrl)
+
     const { getToken } = useAuth();
     const {isSignedIn ,user} = useUser();
     const {openSignIn} = useClerk();
@@ -106,15 +109,17 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
             setResultImage(null);
         }
     }
+
+    
     const value = {
-        credit,
-        setCredit,
+        credit, 
         loadCreditsData, 
-        backendUrl,
-        image, 
         setImage, 
-        removeBg , resultImage ,
-         setResultImage
+        removeBg, 
+        resultImage,
+        setResultImage,
+        backendUrl,
+        getToken
     };
 
     return (
