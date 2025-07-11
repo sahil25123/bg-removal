@@ -1,7 +1,61 @@
 import React from 'react';
 import { assets, plans } from '../assets/assets';
+import { useContext } from 'react';
+import AppContext from "../context/AppContext";
+import { toast } from "react-toastify";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const BuyCredit = () => {
+  const { backendUrl, loadCreditsData, getToken } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const initPay = async (order) => {
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: "Credits Payment",
+      description: "Credits Payment",
+      order_id: order.id,
+      receipt: order.receipt,
+      handler: async (response) => {
+        console.log(response);
+        const token = await getToken();
+        try {
+          const { data } = await axios.post(backendUrl + '/api/user/verify-razor', response, { headers: { token } });
+          if (data.success) {
+            loadCreditsData();
+            navigate('/');
+            toast.success('Credit added');
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error(error.message);
+        }
+      }
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+
+  const paymentRazorPay = async (planId) => {
+    try {
+      const token = await getToken();
+      const { data } = await axios.post(`${backendUrl}/api/user/pay-razor`, { planId }, {
+        headers: { token }
+      });
+
+      if (data.success) {
+        initPay(data.order);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   return (
     <section className="min-h-[80vh] py-16 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,7 +78,7 @@ const BuyCredit = () => {
         {/* Pricing Plans */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {plans.map((item, index) => (
-            <div 
+            <div
               key={index}
               className={`bg-white rounded-xl shadow-md overflow-hidden border ${
                 item.popular ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-200'
@@ -37,9 +91,9 @@ const BuyCredit = () => {
               )}
               <div className="p-6 sm:p-8">
                 <div className="flex items-center mb-4">
-                  <img 
-                    src={assets.logo_icon} 
-                    alt="Plan icon" 
+                  <img
+                    src={assets.logo_icon}
+                    alt="Plan icon"
                     className="w-10 h-10 mr-3"
                   />
                   <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
@@ -52,9 +106,9 @@ const BuyCredit = () => {
                   <span className="text-gray-500"> / {item.credits} credits</span>
                 </div>
                 
-                <button
+                <button onClick={() => paymentRazorPay(item.id)}
                   className={`w-full py-3 px-4 rounded-lg font-medium ${
-                    item.popular 
+                    item.popular
                       ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   } transition-colors shadow-sm hover:shadow-md`}
