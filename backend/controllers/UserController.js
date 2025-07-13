@@ -3,7 +3,17 @@ import User from "../models/user.js";
 
 // API controller function to manage clerk user with database
 // https://localhost:port/api/user/webhooks
+
+
+
 const clerkWebHooks = async (req, res) => {
+
+  console.log("Web hooks called ")
+
+  // At the start of clerkWebHooks
+console.log("Incoming Webhook Headers:", req.headers);
+console.log("Incoming Webhook Body:", JSON.stringify(req.body, null, 2));
+
   try {
     // Verify the webhook signature
     const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
@@ -40,6 +50,8 @@ const clerkWebHooks = async (req, res) => {
           };
           
           const newUser = await User.create(userData);
+
+
           console.log('User created in DB:', newUser);
           return res.status(200).json({ success: true, message: 'User created successfully' });
         }

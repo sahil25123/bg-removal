@@ -14,7 +14,7 @@ const Navbar = () => {
 
   useEffect(() =>{
     if(isSignedIn){
-      loadCreditData
+      loadCreditData;
     }
 
   },[isSignedIn , loadCreditData])

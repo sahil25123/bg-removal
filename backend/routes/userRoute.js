@@ -14,5 +14,4 @@ UserRouter.get("/credits" , authUser , userCredits);
 
 UserRouter.post("/pay-razor" , authUser , paymentRazorPay)
 
-
 export default UserRouter;
