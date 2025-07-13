@@ -7,10 +7,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const BuyCredit = () => {
-
- 
-
+  
   const { backendUrl, loadCreditsData, getToken } = useContext(AppContext);
+  
   const navigate = useNavigate();
   // console.log(backendUrl);
 

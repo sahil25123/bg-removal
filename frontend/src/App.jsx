@@ -11,7 +11,6 @@ import AppContextProvider from "./context/AppContext";
 
 function App() {
   return (
-    <AppContextProvider>
       <div className="min-h-screen bg-slate-50">
         <Navbar />
         <Routes>
@@ -22,7 +21,7 @@ function App() {
         <Footer />
         <ToastContainer position="bottom-right" autoClose={3000} />
       </div>
-    </AppContextProvider>
+    
   );
 }
 
