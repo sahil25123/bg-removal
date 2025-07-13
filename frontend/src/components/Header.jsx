@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { assets } from '../assets/assets';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../context/AppContext.jsx';
 
 const Header = () => {
 
   const {removeBg} = useContext(AppContext)
+  
   return (
     <header className="bg-gradient-to-b from-blue-50 to-white py-12 md:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

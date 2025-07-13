@@ -107,4 +107,87 @@ const paymentRazorPay = async (req, res) => {
     }
 };
 
+export const verifyRazorpay = async (req, res) => {
+    try {
+        const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
+        
+        if (!razorpay_order_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'Order ID is required'
+            });
+        }
+
+        // Fetch order details from Razorpay
+        const order = await razorpayInstance.orders.fetch(razorpay_order_id);
+        
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: 'Order not found'
+            });
+        }
+
+        // Verify payment status
+        if (order.status !== 'paid') {
+            return res.status(400).json({
+                success: false,
+                message: 'Payment not completed'
+            });
+        }
+
+        // Find the transaction
+        const transaction = await Transaction.findById(order.receipt);
+        if (!transaction) {
+            return res.status(404).json({
+                success: false,
+                message: 'Transaction not found'
+            });
+        }
+
+        // Check if already processed
+        if (transaction.status === 'completed') {
+            return res.json({
+                success: true,
+                message: 'Credits already added',
+                transactionId: transaction._id
+            });
+        }
+
+        // Find and update user
+        const user = await User.findOne({ clerkId: transaction.clerkId });
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        // Update user credits and transaction status
+        user.creditBalance += transaction.credits;
+        await user.save();
+
+        transaction.status = 'completed';
+        transaction.razorpayPaymentId = razorpay_payment_id;
+        transaction.razorpayOrderId = razorpay_order_id;
+        transaction.razorpaySignature = razorpay_signature;
+        transaction.completedAt = new Date();
+        await transaction.save();
+
+        res.json({
+            success: true,
+            message: 'Credits added successfully',
+            credits: user.creditBalance,
+            transactionId: transaction._id
+        });
+    } catch (error) {
+        console.error('Payment verification error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error processing payment verification',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+}
+
 export default paymentRazorPay;
