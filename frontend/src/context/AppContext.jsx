@@ -19,7 +19,7 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
     const {isSignedIn ,user} = useUser();
     const {openSignIn} = useClerk();
 
-    const loadCreditsData = async () => {
+    const loadCreditData = async () => {
         try {
             const token = await getToken();
             const { data } = await axios.get(`${backendUrl}/api/user/credits`, {
@@ -113,7 +113,7 @@ const AppContextProvider = ({ children }) => {  // Destructure children directly
     
     const value = {
         credit, 
-        loadCreditsData, 
+        loadCreditData, 
         setImage, 
         removeBg, 
         resultImage,

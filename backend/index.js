@@ -13,7 +13,10 @@ const port=process.env.PORT||9000;
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // or whatever port your frontend is running on
+  credentials: true
+}));
 
 await connectDB();
 

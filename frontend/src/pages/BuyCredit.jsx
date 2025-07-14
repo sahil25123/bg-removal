@@ -1,14 +1,14 @@
 import React from 'react';
 import { assets, plans } from '../assets/assets';
 import { useContext } from 'react';
-import AppContext from "../context/AppContext.jsx";
+import { AppContext } from "../context/AppContext.jsx";
 import { toast } from "react-toastify";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const BuyCredit = () => {
   
-  const { backendUrl, loadCreditsData, getToken } = useContext(AppContext);
+  const { backendUrl, loadCreditData, getToken } = useContext(AppContext);
   
   const navigate = useNavigate();
   // console.log(backendUrl);
@@ -28,7 +28,7 @@ const BuyCredit = () => {
         try {
           const { data } = await axios.post(backendUrl + '/api/user/verify-razor', response, { headers: { token } });
           if (data.success) {
-            loadCreditsData();
+             await loadCreditData();
             navigate('/');
             toast.success('Credit added');
           }
