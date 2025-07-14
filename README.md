@@ -1,39 +1,56 @@
-# Background Removal Application
+# 🖼️ Background Removal Tool
 
-A full-stack web application that allows users to remove backgrounds from images with ease. Built with React, Node.js, and Express, this application provides a seamless user experience for image processing.
+A powerful, user-friendly web application that lets you remove backgrounds from images in seconds. Built with modern web technologies, this tool offers a seamless experience for both casual users and professionals.
 
-## Features
+![App Preview](https://via.placeholder.com/1200x600?text=Background+Removal+App+Preview)  
+*Replace with actual screenshot*
 
-- 🔍 Upload images for background removal
-- ✂️ Automatic background removal with high accuracy
-- 📥 Download processed images
-- 👤 User authentication and management
-- 🎨 Clean and responsive user interface
+## ✨ Key Features
 
-## Tech Stack
+### 🚀 One-Click Background Removal
+- Upload any image and remove its background with a single click
+- Supports JPG, PNG, and WebP formats
+- High-quality output with transparent background
+
+### 🔒 User Authentication
+- Secure sign-up and login with Clerk
+- Protected user dashboard
+- Credit-based system for usage tracking
+
+### 🛠️ Advanced Features
+- Real-time preview of processed images
+- Download images in multiple formats
+- Credit system for usage management
+- Responsive design works on all devices
+
+## 🛠️ Tech Stack
 
 ### Frontend
-- React 19
-- Tailwind CSS for styling
-- Vite for build tooling
-- React Router for navigation
-- Clerk for authentication
+- ⚛️ React 19 with Hooks
+- 🎨 Tailwind CSS for beautiful, responsive design
+- ⚡ Vite for fast development and building
+- 🔄 React Router for smooth navigation
+- 🔐 Clerk for authentication
+- 🖼️ React Dropzone for file uploads
 
 ### Backend
-- Node.js with Express
-- RESTful API architecture
-- JWT for authentication
-- CORS enabled for cross-origin requests
+- 🚀 Node.js with Express
+- 🔄 RESTful API architecture
+- 🔒 JWT authentication
+- 🌐 CORS enabled
+- 📦 MongoDB for data storage
+- 🖼️ Sharp for image processing
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
-- npm or yarn
-- Git
+- Node.js 16.x or higher
+- npm 7.x or higher or yarn
+- MongoDB Atlas account or local MongoDB instance
+- Clerk account for authentication
 
-### Installation
+### 🛠️ Installation
 
 1. **Clone the repository**
    ```bash
@@ -45,8 +62,37 @@ A full-stack web application that allows users to remove backgrounds from images
    ```bash
    cd backend
    npm install
-   cp .env.example .env  # Update the environment variables
+   cp .env.example .env
+   # Update the .env file with your configuration
    ```
+
+3. **Set up the frontend**
+   ```bash
+   cd ../frontend
+   npm install
+   cp .env.example .env.local
+   # Update the environment variables with your Clerk credentials
+   ```
+
+4. **Run the application**
+   - In the backend directory: `npm run dev`
+   - In the frontend directory: `npm run dev`
+   - Open `http://localhost:5173` in your browser
+
+## 📝 Usage
+
+1. **Sign up** or **Log in** to your account
+2. Upload an image by dragging and dropping or clicking the upload area
+3. Wait a few seconds for the background to be removed
+4. Download the processed image or share it directly
+5. Check your remaining credits in the top navigation
+
+## 🔄 Credit System
+
+- New users receive 5 free credits
+- Each image processing costs 1 credit
+- Purchase additional credits as needed
+- Track your credit usage in the dashboard
 
 3. **Set up the frontend**
    ```bash
